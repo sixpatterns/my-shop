@@ -1,0 +1,69 @@
+name: build
+
+on: [push]
+
+env:
+  DATABASE_URL: postgres://postgres@localhost/backend_test
+  FERRUM_NODE_MOVING_WAIT: 0.1
+  PARALLEL_WORKERS: 1
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    services:
+      postgres:
+        env:
+          POSTGRES_HOST_AUTH_METHOD: trust
+        image: postgres:alpine
+        ports:
+          - 5432:5432
+
+    steps:
+      # Install
+      - uses: actions/checkout@v6
+      - uses: ruby/setup-ruby@v1
+        with:
+          bundler-cache: true
+          ruby-version: 3.4.5
+          working-directory: ./backend
+      - uses: actions/setup-node@v6
+        with:
+          cache: yarn
+          cache-dependency-path: |
+            ./frontend/yarn.lock
+          node-version: 24.14.0
+
+      - run: yarn install --frozen-lockfile
+        working-directory: ./frontend
+
+      # Codegen
+      - name: Generate schema.graphql
+        run: |
+          bundle exec rails runner 'require "graphql/rake_task"; GraphQL::RakeTask.new(schema_name: "BackendSchema", idl_outfile: "../schema.graphql"); Rake::Task["graphql:schema:idl"].invoke'
+        working-directory: ./backend
+      - name: Validate schema.graphql
+        run: git diff --exit-code schema.graphql
+      - run: yarn codegen
+        working-directory: ./frontend
+
+      # Lint
+      - run: bundle exec rubocop
+        working-directory: ./backend
+      - run: yarn lint
+        working-directory: ./frontend
+      - run: yarn prettier . --check
+        working-directory: ./frontend
+
+      - run: yarn build
+        working-directory: ./frontend
+
+      # Tests
+      - run: bundle exec rails db:create
+        working-directory: ./backend
+        env:
+          RAILS_ENV: test
+      - run: bundle exec rails test
+        working-directory: ./backend
+      - run: bundle exec rails test:system
+        working-directory: ./backend
