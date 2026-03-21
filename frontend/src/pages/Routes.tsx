@@ -3,9 +3,10 @@ import { Navigate, Outlet, Route, Routes as Router } from "react-router";
 import Layout from "./Layout";
 
 import asyncComponent from "../components/asyncComponent";
+import { useSessionStore } from "../stores/useSessionStore";
 
 const PublicRoute = () => {
-  const session = useSessionsStore((i) => i.session);
+  const session = useSessionStore((i) => i.session);
 
   if (session) return <Navigate to="/" />;
 
@@ -13,7 +14,7 @@ const PublicRoute = () => {
 };
 
 const PrivateRoute = () => {
-  const session = useSessionsStore((i) => i.session);
+  const session = useSessionStore((i) => i.session);
 
   if (!session) return <Navigate to="/login" />;
 

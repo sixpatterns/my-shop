@@ -1,9 +1,9 @@
 import { Navigate } from "react-router";
 
-import { useSessionsStore } from "../../stores/useSessionsStore";
+import { useSessionStore } from "../../stores/useSessionStore";
 
 const Root = () => {
-  const session = useSessionsStore((i) => i.session);
+  const session = useSessionStore((i) => i.session);
 
   if (session) return <Navigate to="/dashboard" />;
 
