@@ -1,0 +1,19 @@
+overwrite: true
+schema: "../schema.graphql"
+documents: "src/api/base.graphql"
+generates:
+  src/api/base.ts:
+    config:
+      disableDescriptions: true
+      enumsAsTypes: true
+      scalars:
+        ISO8601Date: string
+        ISO8601DateTime: string
+      skipTypename: true
+    plugins:
+      - add:
+          content: |
+            /* eslint-disable */
+      - typescript
+      - typescript-operations
+      - typed-document-node

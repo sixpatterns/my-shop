@@ -1,9 +1,11 @@
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { ConfigProvider } from "antd";
+import { ComponentProps } from "react";
 import { BrowserRouter } from "react-router";
 
 import { Routes } from "./pages/Routes";
 
-const queryClient = new QueryClient({
+export const queryClient = new QueryClient({
   defaultOptions: {
     queries: {
       refetchOnWindowFocus: false,
@@ -12,13 +14,21 @@ const queryClient = new QueryClient({
   },
 });
 
+const theme: ComponentProps<typeof ConfigProvider>["theme"] = {
+  token: {
+    colorPrimary: "#00b96b",
+  },
+};
+
 const App = () => {
   return (
-    <QueryClientProvider client={queryClient}>
-      <BrowserRouter>
-        <Routes />
-      </BrowserRouter>
-    </QueryClientProvider>
+    <ConfigProvider theme={theme}>
+      <QueryClientProvider client={queryClient}>
+        <BrowserRouter>
+          <Routes />
+        </BrowserRouter>
+      </QueryClientProvider>
+    </ConfigProvider>
   );
 };
 
