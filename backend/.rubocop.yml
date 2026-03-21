@@ -1,0 +1,72 @@
+plugins:
+  - rubocop-capybara
+  - rubocop-factory_bot
+  - rubocop-graphql
+  - rubocop-minitest
+  - rubocop-rails
+
+require:
+  - rubocop-ordered_methods
+
+AllCops:
+  NewCops: enable
+
+GraphQL/ArgumentDescription:
+  Enabled: false
+
+GraphQL/ExtractInputType:
+  Enabled: false
+
+GraphQL/ExtractType:
+  Enabled: false
+
+GraphQL/FieldDescription:
+  Enabled: false
+
+GraphQL/MaxComplexitySchema:
+  Enabled: false
+
+GraphQL/MaxDepthSchema:
+  Enabled: false
+
+GraphQL/ObjectDescription:
+  Enabled: false
+
+Metrics/BlockLength:
+  Enabled: false
+
+Metrics/ClassLength:
+  Enabled: false
+
+Metrics/MethodLength:
+  Enabled: false
+
+Minitest/AssertPredicate:
+  Enabled: false
+
+Minitest/MultipleAssertions:
+  Enabled: false
+
+Naming/PredicateMethod:
+  AllowedPatterns:
+    - '\Aresolve\z'
+
+Style/ClassAndModuleChildren:
+  Enabled: true
+  EnforcedStyle: compact
+
+Style/Documentation:
+  Enabled: false
+
+Style/HashSyntax:
+  EnforcedShorthandSyntax: never
+
+Style/StringLiterals:
+  Enabled: true
+  EnforcedStyle: double_quotes
+
+Style/SymbolArray:
+  EnforcedStyle: brackets
+
+Style/WordArray:
+  EnforcedStyle: brackets
