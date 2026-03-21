@@ -1,5 +1,25 @@
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { BrowserRouter } from "react-router";
+
+import { Routes } from "./pages/Routes";
+
+const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: {
+      refetchOnWindowFocus: false,
+      retry: false,
+    },
+  },
+});
+
 const App = () => {
-  return <h1>Hello world</h1>;
+  return (
+    <QueryClientProvider client={queryClient}>
+      <BrowserRouter>
+        <Routes />
+      </BrowserRouter>
+    </QueryClientProvider>
+  );
 };
 
 export default App;
