@@ -10,9 +10,23 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2026_03_21_103422) do
+ActiveRecord::Schema[7.2].define(version: 2026_03_21_160615) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "orders", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.decimal "shipping_fee", null: false
+    t.decimal "subtotal", null: false
+    t.decimal "tax", null: false
+    t.decimal "total", null: false
+    t.integer "status", null: false
+    t.string "address", null: false
+    t.string "currency", null: false
+    t.string "customer_name", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["status"], name: "index_orders_on_status"
+  end
 
   create_table "users", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.string "full_name"
