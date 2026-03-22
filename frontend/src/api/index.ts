@@ -9,6 +9,8 @@ import {
   OrderDeleteMutationVariables,
   OrderDocument,
   OrdersDocument,
+  OrdersSummaryDocument,
+  OrdersSummaryQueryVariables,
   OrderUpdateDocument,
   OrderUpdateMutationVariables,
   SessionCreateDocument,
@@ -54,8 +56,16 @@ const client = new GraphQLClient(
 
 export const useSessionCreate = () => {
   return useMutation({
-    mutationFn: (variables: SessionCreateMutationVariables) =>
-      client.request(SessionCreateDocument, variables),
+    mutationFn: (i: SessionCreateMutationVariables) =>
+      client.request(SessionCreateDocument, i),
+  });
+};
+
+export const useOrdersSummary = (i: OrdersSummaryQueryVariables) => {
+  return useQuery({
+    queryFn: async () =>
+      (await client.request(OrdersSummaryDocument, i)).ordersSummary,
+    queryKey: ["ordersSummary", i],
   });
 };
 
@@ -79,8 +89,8 @@ export const useOrderCreate = () => {
   const queryClient = useQueryClient();
 
   return useMutation({
-    mutationFn: (variables: OrderCreateMutationVariables) =>
-      client.request(OrderCreateDocument, variables),
+    mutationFn: (i: OrderCreateMutationVariables) =>
+      client.request(OrderCreateDocument, i),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["orders"] });
     },
@@ -91,8 +101,8 @@ export const useOrderDelete = () => {
   const queryClient = useQueryClient();
 
   return useMutation({
-    mutationFn: (variables: OrderDeleteMutationVariables) =>
-      client.request(OrderDeleteDocument, variables),
+    mutationFn: (i: OrderDeleteMutationVariables) =>
+      client.request(OrderDeleteDocument, i),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["orders"] });
     },
@@ -103,8 +113,8 @@ export const useOrderUpdate = () => {
   const queryClient = useQueryClient();
 
   return useMutation({
-    mutationFn: (variables: OrderUpdateMutationVariables) =>
-      client.request(OrderUpdateDocument, variables),
+    mutationFn: (i: OrderUpdateMutationVariables) =>
+      client.request(OrderUpdateDocument, i),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["orders"] });
     },

@@ -51,5 +51,6 @@ group :test do
 end
 
 gem "graphql"
+gem "groupdate"
 gem "jwt"
 gem "phantom", git: "https://github.com/vivekmiyani/phantom.git"

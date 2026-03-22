@@ -136,6 +136,8 @@ GEM
       base64
       fiber-storage
       logger
+    groupdate (6.7.0)
+      activesupport (>= 7.1)
     i18n (1.14.8)
       concurrent-ruby (~> 1.0)
     io-console (0.8.2)
@@ -346,6 +348,7 @@ DEPENDENCIES
   factory_bot_rails
   faker
   graphql
+  groupdate
   jwt
   pg (~> 1.1)
   phantom!

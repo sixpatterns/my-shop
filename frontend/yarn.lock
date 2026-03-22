@@ -835,6 +835,11 @@
   resolved "https://registry.yarnpkg.com/@graphql-typed-document-node/core/-/core-3.2.0.tgz#5f3d96ec6b2354ad6d8a28bf216a1d97b5426861"
   integrity sha512-mB9oAsNCm9aM3/SOv4YtBMqZbYj10R7dkq8byBqxGY/ncFwhf2oQzMV+LCRlWoDSEBJ3COiR1yeDvMtsoOsuFQ==
 
+"@highcharts/react@^4.2.1":
+  version "4.2.1"
+  resolved "https://registry.yarnpkg.com/@highcharts/react/-/react-4.2.1.tgz#f7cbf6bf1f0adf75413eeb7248b49c66f3de6fad"
+  integrity sha512-ytHN0EsnT0AtmWBbQ7JHSDmNC+ionSsXrru2X1oxeFGKlKe7XU1vbhohG5bHIU+4Oao5Y6ug6920Big8FMZpoQ==
+
 "@humanwhocodes/config-array@^0.13.0":
   version "0.13.0"
   resolved "https://registry.yarnpkg.com/@humanwhocodes/config-array/-/config-array-0.13.0.tgz#fb907624df3256d04b9aa2df50d7aa97ec648748"
@@ -2981,6 +2986,11 @@ hermes-parser@^0.25.1:
   integrity sha512-6pEjquH3rqaI6cYAXYPcz9MS4rY6R4ngRgrgfDshRptUZIc3lw0MCIJIGDj9++mfySOuPTHB4nrSW99BCvOPIA==
   dependencies:
     hermes-estree "0.25.1"
+
+highcharts@^12.5.0:
+  version "12.5.0"
+  resolved "https://registry.yarnpkg.com/highcharts/-/highcharts-12.5.0.tgz#1cf5bc1214bb7bbd717096420089d130e84847ff"
+  integrity sha512-uNSSv1KqRLNvkyXlf1FbeGWB1mJ/8/IYpVeqYiTIop5Wo8peUvNyzUfLa58vILsmXyz+XrETtgKIEOcSgBBKuQ==
 
 http-proxy-agent@^6.0.0:
   version "6.1.1"
