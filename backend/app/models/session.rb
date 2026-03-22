@@ -34,6 +34,8 @@ class Session
   end
 
   def self.token(record)
-    JWT.encode({ "user_id" => record.id }, secret)
+    exp = 12.hours.from_now.to_i
+
+    JWT.encode({ exp: exp, user_id: record.id }, secret)
   end
 end

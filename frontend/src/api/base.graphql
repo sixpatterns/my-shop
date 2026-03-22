@@ -4,3 +4,45 @@ mutation sessionCreate($input: SessionCreateInput!) {
     token
   }
 }
+
+query orders {
+  orders {
+    address
+    createdAt
+    currency
+    customerName
+    id
+    shippingFee
+    status
+    subtotal
+    tax
+    total
+  }
+}
+
+query order($id: ID!) {
+  order(id: $id) {
+    address
+    createdAt
+    currency
+    customerName
+    id
+    shippingFee
+    status
+    subtotal
+    tax
+    total
+  }
+}
+
+mutation orderCreate($input: OrderCreateInput!) {
+  orderCreate(input: $input)
+}
+
+mutation orderUpdate($input: OrderUpdateInput!) {
+  orderUpdate(input: $input)
+}
+
+mutation orderDelete($input: OrderDeleteInput!) {
+  orderDelete(input: $input)
+}

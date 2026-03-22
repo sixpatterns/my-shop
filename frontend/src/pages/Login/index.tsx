@@ -18,7 +18,7 @@ const Login = () => {
 
     create(session);
 
-    navigate("/");
+    navigate("/", { replace: true });
   };
 
   return (

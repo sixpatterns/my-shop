@@ -1,9 +1,16 @@
 # frozen_string_literal: true
 
 class Types::QueryType < Types::BaseObject
-  field :test_field, String, null: false
+  field :order, Types::OrderType, null: false do
+    argument :id, ID, required: true
+  end
+  field :orders, [Types::OrderType], null: false
 
-  def test_field
-    "Hello, world!"
+  def order(id:)
+    OrderPolicy.new(context[:current_session]).scope.find(id)
+  end
+
+  def orders
+    OrderPolicy.new(context[:current_session]).scope
   end
 end

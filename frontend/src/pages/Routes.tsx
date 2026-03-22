@@ -8,7 +8,7 @@ import { useSessionStore } from "../stores/useSessionStore";
 const PublicRoute = () => {
   const session = useSessionStore((i) => i.session);
 
-  if (session) return <Navigate to="/" />;
+  if (session) return <Navigate replace to="/" />;
 
   return <Outlet />;
 };
@@ -16,7 +16,7 @@ const PublicRoute = () => {
 const PrivateRoute = () => {
   const session = useSessionStore((i) => i.session);
 
-  if (!session) return <Navigate to="/login" />;
+  if (!session) return <Navigate replace to="/login" />;
 
   return <Outlet />;
 };
