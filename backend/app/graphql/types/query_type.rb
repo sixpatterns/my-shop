@@ -5,6 +5,7 @@ class Types::QueryType < Types::BaseObject
     argument :id, ID, required: true
   end
   field :orders, [Types::OrderType], null: false
+  field :orders_summary, Types::OrdersSummaryType, null: false
 
   def order(id:)
     OrderPolicy.new(context[:current_session]).scope.find(id)
@@ -12,5 +13,9 @@ class Types::QueryType < Types::BaseObject
 
   def orders
     OrderPolicy.new(context[:current_session]).scope
+  end
+
+  def orders_summary
+    {}
   end
 end

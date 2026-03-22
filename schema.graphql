@@ -30,6 +30,11 @@ type Mutation {
   ): SessionCreatePayload!
 }
 
+type NameValue {
+  name: String!
+  value: Float!
+}
+
 type Order {
   address: String!
   createdAt: ISO8601DateTime!
@@ -98,9 +103,18 @@ input OrderUpdateInput {
   id: ID!
 }
 
+type OrdersSummary {
+  avgAmount(createdAtGt: ISO8601DateTime, createdAtLt: ISO8601DateTime): Float!
+  countByStatus(createdAtGt: ISO8601DateTime, createdAtLt: ISO8601DateTime): [NameValue!]!
+  revenueByMonth(createdAtGt: ISO8601DateTime, createdAtLt: ISO8601DateTime): [NameValue!]!
+  totalCount(createdAtGt: ISO8601DateTime, createdAtLt: ISO8601DateTime, status: OrderStatusEnum): Int!
+  totalRevenue(createdAtGt: ISO8601DateTime, createdAtLt: ISO8601DateTime): Float!
+}
+
 type Query {
   order(id: ID!): Order!
   orders: [Order!]!
+  ordersSummary: OrdersSummary!
 }
 
 """

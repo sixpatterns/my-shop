@@ -46,3 +46,27 @@ mutation orderUpdate($input: OrderUpdateInput!) {
 mutation orderDelete($input: OrderDeleteInput!) {
   orderDelete(input: $input)
 }
+
+query ordersSummary(
+  $createdAtGt: ISO8601DateTime
+  $createdAtLt: ISO8601DateTime
+) {
+  ordersSummary {
+    avgAmount(createdAtGt: $createdAtGt, createdAtLt: $createdAtLt)
+    countByStatus(createdAtGt: $createdAtGt, createdAtLt: $createdAtLt) {
+      name
+      value
+    }
+    revenueByMonth(createdAtGt: $createdAtGt, createdAtLt: $createdAtLt) {
+      name
+      value
+    }
+    totalCount(createdAtGt: $createdAtGt, createdAtLt: $createdAtLt)
+    totalPendingCount: totalCount(
+      createdAtGt: $createdAtGt
+      createdAtLt: $createdAtLt
+      status: pending
+    )
+    totalRevenue(createdAtGt: $createdAtGt, createdAtLt: $createdAtLt)
+  }
+}
