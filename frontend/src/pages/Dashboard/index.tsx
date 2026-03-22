@@ -62,7 +62,7 @@ const Dashboard = () => {
       <div className="mt-4 grid grid-cols-1 gap-4 md:grid-cols-2">
         <Card variant="borderless">
           <Chart
-            containerProps={{ className: "h-full w-full h-72" }}
+            containerProps={{ className: "w-full h-72" }}
             options={{
               credits: { enabled: false },
               legend: { enabled: false },
@@ -91,7 +91,7 @@ const Dashboard = () => {
 
         <Card variant="borderless">
           <Chart
-            containerProps={{ className: "h-full w-full h-72" }}
+            containerProps={{ className: "w-full h-72" }}
             options={{
               credits: { enabled: false },
               legend: { enabled: false },
