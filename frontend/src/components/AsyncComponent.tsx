@@ -14,7 +14,7 @@ const LoadingBar = () => {
   return null;
 };
 
-const asyncComponent = (importFn: () => Promise<{ default: FC }>) => {
+const AsyncComponent = (importFn: () => Promise<{ default: FC }>) => {
   const LazyComponent = lazy(importFn);
 
   const component = () => (
@@ -26,4 +26,4 @@ const asyncComponent = (importFn: () => Promise<{ default: FC }>) => {
   return component;
 };
 
-export default asyncComponent;
+export default AsyncComponent;
