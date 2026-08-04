@@ -4,8 +4,10 @@ import dayjs from "dayjs";
 import { useState } from "react";
 
 import { useOrdersSummary } from "../../api";
-import { OrderStatusEnum } from "../../api/base";
+import { graphql } from "../../api/graphql";
 import { ORDER_STATUSES } from "../../helpers/mappings";
+
+type OrderStatusEnum = ReturnType<typeof graphql.scalar<"OrderStatusEnum">>;
 
 const Dashboard = () => {
   const [year, setYear] = useState(dayjs());

@@ -8,7 +8,7 @@
     "build": "tsc && vite build",
     "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
     "preview": "vite preview",
-    "codegen": "graphql-codegen --config codegen.yml"
+    "codegen": "gql-tada generate output && gql-tada generate turbo && gql-tada check"
   },
   "dependencies": {
     "@ant-design/icons": "^5.3.1",
@@ -17,6 +17,7 @@
     "@tanstack/react-query": "^5.91.3",
     "antd": "^5.29.2",
     "dayjs": "^1.11.20",
+    "gql.tada": "^1.11.3",
     "graphql": "^16.13.1",
     "graphql-request": "^7.4.0",
     "highcharts": "^12.5.0",
@@ -27,11 +28,6 @@
     "zustand": "^5.0.12"
   },
   "devDependencies": {
-    "@graphql-codegen/add": "^6.0.0",
-    "@graphql-codegen/cli": "^3.3.1",
-    "@graphql-codegen/typed-document-node": "^6.1.6",
-    "@graphql-codegen/typescript": "^5.0.8",
-    "@graphql-codegen/typescript-operations": "^5.0.8",
     "@tanstack/eslint-plugin-query": "^5.91.5",
     "@types/react": "^18.2.15",
     "@types/react-dom": "^18.2.7",

@@ -1,8 +1,12 @@
 import { Button, Form, Input } from "antd";
 
 import { useCustomer, useCustomerCreate, useCustomerUpdate } from "../../api";
-import { CustomerAttributes } from "../../api/base";
+import { graphql } from "../../api/graphql";
 import { FormDrawer } from "../../components/FormDrawer";
+
+type CustomerAttributes = ReturnType<
+  typeof graphql.scalar<"CustomerAttributes">
+>;
 
 export const Edit = ({
   modal,

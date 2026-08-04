@@ -2,8 +2,12 @@ import { Button, Form, Input } from "antd";
 import { useNavigate } from "react-router";
 
 import { useSessionCreate } from "../../api";
-import { SessionCreateInput } from "../../api/base";
+import { graphql } from "../../api/graphql";
 import { useSessionStore } from "../../stores/useSessionStore";
+
+type SessionCreateInput = ReturnType<
+  typeof graphql.scalar<"SessionCreateInput">
+>;
 
 const Login = () => {
   const navigate = useNavigate();

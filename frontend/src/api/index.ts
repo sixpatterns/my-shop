@@ -2,29 +2,7 @@ import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { notification } from "antd";
 import { GraphQLClient } from "graphql-request";
 
-import {
-  CustomerCreateDocument,
-  CustomerCreateMutationVariables,
-  CustomerDeleteDocument,
-  CustomerDeleteMutationVariables,
-  CustomerDocument,
-  CustomersDocument,
-  CustomerUpdateDocument,
-  CustomerUpdateMutationVariables,
-  OrderCreateDocument,
-  OrderCreateMutationVariables,
-  OrderDeleteDocument,
-  OrderDeleteMutationVariables,
-  OrderDocument,
-  OrdersDocument,
-  OrdersQueryVariables,
-  OrdersSummaryDocument,
-  OrdersSummaryQueryVariables,
-  OrderUpdateDocument,
-  OrderUpdateMutationVariables,
-  SessionCreateDocument,
-  SessionCreateMutationVariables,
-} from "./base";
+import { graphql, VariablesOf } from "./graphql";
 
 import { queryClient } from "../App";
 import { useSessionStore } from "../stores/useSessionStore";
@@ -63,12 +41,33 @@ const client = new GraphQLClient(
   },
 );
 
+const SessionCreateDocument = graphql(`
+  mutation sessionCreate($input: SessionCreateInput!) {
+    sessionCreate(input: $input) {
+      fullName
+      token
+    }
+  }
+`);
+
 export const useSessionCreate = () => {
   return useMutation({
-    mutationFn: (i: SessionCreateMutationVariables) =>
+    mutationFn: (i: VariablesOf<typeof SessionCreateDocument>) =>
       client.request(SessionCreateDocument, i),
   });
 };
+
+const CustomersDocument = graphql(`
+  query customers {
+    customers {
+      createdAt
+      email
+      id
+      name
+      phone
+    }
+  }
+`);
 
 export const useCustomers = () => {
   return useQuery({
@@ -77,6 +76,17 @@ export const useCustomers = () => {
     queryKey: ["customers"],
   });
 };
+
+const CustomerDocument = graphql(`
+  query customer($id: ID!) {
+    customer(id: $id) {
+      email
+      id
+      name
+      phone
+    }
+  }
+`);
 
 export const useCustomer = (id: string) => {
   return useQuery({
@@ -87,11 +97,17 @@ export const useCustomer = (id: string) => {
   });
 };
 
+const CustomerCreateDocument = graphql(`
+  mutation customerCreate($input: CustomerCreateInput!) {
+    customerCreate(input: $input)
+  }
+`);
+
 export const useCustomerCreate = () => {
   const queryClient = useQueryClient();
 
   return useMutation({
-    mutationFn: (i: CustomerCreateMutationVariables) =>
+    mutationFn: (i: VariablesOf<typeof CustomerCreateDocument>) =>
       client.request(CustomerCreateDocument, i),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["customers"] });
@@ -99,11 +115,17 @@ export const useCustomerCreate = () => {
   });
 };
 
+const CustomerDeleteDocument = graphql(`
+  mutation customerDelete($input: CustomerDeleteInput!) {
+    customerDelete(input: $input)
+  }
+`);
+
 export const useCustomerDelete = () => {
   const queryClient = useQueryClient();
 
   return useMutation({
-    mutationFn: (i: CustomerDeleteMutationVariables) =>
+    mutationFn: (i: VariablesOf<typeof CustomerDeleteDocument>) =>
       client.request(CustomerDeleteDocument, i),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["customers"] });
@@ -111,11 +133,17 @@ export const useCustomerDelete = () => {
   });
 };
 
+const CustomerUpdateDocument = graphql(`
+  mutation customerUpdate($input: CustomerUpdateInput!) {
+    customerUpdate(input: $input)
+  }
+`);
+
 export const useCustomerUpdate = () => {
   const queryClient = useQueryClient();
 
   return useMutation({
-    mutationFn: (i: CustomerUpdateMutationVariables) =>
+    mutationFn: (i: VariablesOf<typeof CustomerUpdateDocument>) =>
       client.request(CustomerUpdateDocument, i),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["customers"] });
@@ -123,7 +151,35 @@ export const useCustomerUpdate = () => {
   });
 };
 
-export const useOrdersSummary = (i: OrdersSummaryQueryVariables) => {
+const OrdersSummaryDocument = graphql(`
+  query ordersSummary(
+    $createdAtGt: ISO8601DateTime
+    $createdAtLt: ISO8601DateTime
+  ) {
+    ordersSummary {
+      avgAmount(createdAtGt: $createdAtGt, createdAtLt: $createdAtLt)
+      countByStatus(createdAtGt: $createdAtGt, createdAtLt: $createdAtLt) {
+        name
+        value
+      }
+      revenueByMonth(createdAtGt: $createdAtGt, createdAtLt: $createdAtLt) {
+        name
+        value
+      }
+      totalCount(createdAtGt: $createdAtGt, createdAtLt: $createdAtLt)
+      totalPendingCount: totalCount(
+        createdAtGt: $createdAtGt
+        createdAtLt: $createdAtLt
+        status: pending
+      )
+      totalRevenue(createdAtGt: $createdAtGt, createdAtLt: $createdAtLt)
+    }
+  }
+`);
+
+export const useOrdersSummary = (
+  i: VariablesOf<typeof OrdersSummaryDocument>,
+) => {
   return useQuery({
     queryFn: async () =>
       (await client.request(OrdersSummaryDocument, i)).ordersSummary,
@@ -131,13 +187,48 @@ export const useOrdersSummary = (i: OrdersSummaryQueryVariables) => {
   });
 };
 
-export const useOrders = (i: OrdersQueryVariables) => {
+const OrdersDocument = graphql(`
+  query orders($includeCustomer: Boolean!) {
+    orders {
+      address
+      createdAt
+      currency
+      customer @include(if: $includeCustomer) {
+        name
+      }
+      id
+      shippingFee
+      status
+      subtotal
+      tax
+      total
+    }
+  }
+`);
+
+export const useOrders = (i: VariablesOf<typeof OrdersDocument>) => {
   return useQuery({
     initialData: [],
     queryFn: async () => (await client.request(OrdersDocument, i)).orders,
     queryKey: ["orders", i],
   });
 };
+
+const OrderDocument = graphql(`
+  query order($id: ID!) {
+    order(id: $id) {
+      address
+      currency
+      customerId
+      id
+      shippingFee
+      status
+      subtotal
+      tax
+      total
+    }
+  }
+`);
 
 export const useOrder = (id: string) => {
   return useQuery({
@@ -147,11 +238,17 @@ export const useOrder = (id: string) => {
   });
 };
 
+const OrderCreateDocument = graphql(`
+  mutation orderCreate($input: OrderCreateInput!) {
+    orderCreate(input: $input)
+  }
+`);
+
 export const useOrderCreate = () => {
   const queryClient = useQueryClient();
 
   return useMutation({
-    mutationFn: (i: OrderCreateMutationVariables) =>
+    mutationFn: (i: VariablesOf<typeof OrderCreateDocument>) =>
       client.request(OrderCreateDocument, i),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["orders"] });
@@ -159,11 +256,17 @@ export const useOrderCreate = () => {
   });
 };
 
+const OrderDeleteDocument = graphql(`
+  mutation orderDelete($input: OrderDeleteInput!) {
+    orderDelete(input: $input)
+  }
+`);
+
 export const useOrderDelete = () => {
   const queryClient = useQueryClient();
 
   return useMutation({
-    mutationFn: (i: OrderDeleteMutationVariables) =>
+    mutationFn: (i: VariablesOf<typeof OrderDeleteDocument>) =>
       client.request(OrderDeleteDocument, i),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["orders"] });
@@ -171,11 +274,17 @@ export const useOrderDelete = () => {
   });
 };
 
+const OrderUpdateDocument = graphql(`
+  mutation orderUpdate($input: OrderUpdateInput!) {
+    orderUpdate(input: $input)
+  }
+`);
+
 export const useOrderUpdate = () => {
   const queryClient = useQueryClient();
 
   return useMutation({
-    mutationFn: (i: OrderUpdateMutationVariables) =>
+    mutationFn: (i: VariablesOf<typeof OrderUpdateDocument>) =>
       client.request(OrderUpdateDocument, i),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["orders"] });

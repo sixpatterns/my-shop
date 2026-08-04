@@ -13,7 +13,6 @@ import { useState } from "react";
 import { Edit } from "./Edit";
 
 import { useOrderDelete, useOrders } from "../../api";
-import { OrdersQuery } from "../../api/base";
 import { displayDateTime } from "../../helpers/dateTime";
 import { ORDER_STATUSES } from "../../helpers/mappings";
 
@@ -24,7 +23,7 @@ const Orders = () => {
 
   const orderDelete = useOrderDelete();
 
-  const columns: TableColumnsType<OrdersQuery["orders"][number]> = [
+  const columns: TableColumnsType<(typeof orders.data)[number]> = [
     {
       key: "createdAt",
       render: (_, i) => displayDateTime(i.createdAt),

@@ -24,4 +24,5 @@ dist-ssr
 *.sw?
 
 #
-/src/api/base.ts
+/src/api/graphql-cache.d.ts
+/src/api/graphql-env.d.ts
