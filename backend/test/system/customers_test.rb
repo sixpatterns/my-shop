@@ -31,7 +31,6 @@ class CustomersTest < ApplicationSystemTestCase
 
   test "delete" do
     user = create(:user)
-
     customer = create(:customer)
 
     sign_in(user)
@@ -56,7 +55,6 @@ class CustomersTest < ApplicationSystemTestCase
 
   test "update" do
     user = create(:user)
-
     customer = create(:customer)
 
     sign_in(user)

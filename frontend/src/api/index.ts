@@ -17,6 +17,7 @@ import {
   OrderDeleteMutationVariables,
   OrderDocument,
   OrdersDocument,
+  OrdersQueryVariables,
   OrdersSummaryDocument,
   OrdersSummaryQueryVariables,
   OrderUpdateDocument,
@@ -130,11 +131,11 @@ export const useOrdersSummary = (i: OrdersSummaryQueryVariables) => {
   });
 };
 
-export const useOrders = () => {
+export const useOrders = (i: OrdersQueryVariables) => {
   return useQuery({
     initialData: [],
-    queryFn: async () => (await client.request(OrdersDocument)).orders,
-    queryKey: ["orders"],
+    queryFn: async () => (await client.request(OrdersDocument, i)).orders,
+    queryKey: ["orders", i],
   });
 };
 

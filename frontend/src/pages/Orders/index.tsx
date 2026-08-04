@@ -20,7 +20,7 @@ import { ORDER_STATUSES } from "../../helpers/mappings";
 const Orders = () => {
   const [modal, setModal] = useState({ id: "", open: false });
 
-  const orders = useOrders();
+  const orders = useOrders({ includeCustomer: true });
 
   const orderDelete = useOrderDelete();
 
@@ -32,7 +32,7 @@ const Orders = () => {
     },
     {
       key: "customer",
-      render: (_, i) => i.customer.name,
+      render: (_, i) => i.customer?.name,
       title: "Customer",
     },
     {

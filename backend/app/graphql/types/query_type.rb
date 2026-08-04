@@ -16,7 +16,7 @@ class Types::QueryType < Types::BaseObject
   end
 
   def customers
-    CustomerPolicy.new(context[:current_session]).scope
+    CustomerPolicy.new(context[:current_session]).scope.order(created_at: :desc)
   end
 
   def order(id:)
@@ -24,7 +24,7 @@ class Types::QueryType < Types::BaseObject
   end
 
   def orders
-    OrderPolicy.new(context[:current_session]).scope
+    OrderPolicy.new(context[:current_session]).scope.order(created_at: :desc)
   end
 
   def orders_summary
