@@ -5,6 +5,7 @@ require "application_system_test_case"
 class OrdersTest < ApplicationSystemTestCase
   test "create" do
     user = create(:user)
+    customer = create(:customer)
 
     sign_in(user)
 
@@ -14,7 +15,9 @@ class OrdersTest < ApplicationSystemTestCase
     click_on "Add order"
 
     within ".ant-drawer" do
-      fill_in "Customer name", with: "John Doe"
+      within ".ant-form-item", text: "Customer" do
+        fill_in_select with: "#{customer.name} (#{customer.email})"
+      end
       within ".ant-form-item", text: "Status" do
         fill_in_select with: "Delivered"
       end
@@ -33,7 +36,7 @@ class OrdersTest < ApplicationSystemTestCase
     assert_attributes Order.last!,
                       address: "123 Main St",
                       currency: "USD",
-                      customer_name: "John Doe",
+                      customer_id: customer.id,
                       shipping_fee: 10,
                       status: "delivered",
                       subtotal: 100,
@@ -43,19 +46,16 @@ class OrdersTest < ApplicationSystemTestCase
 
   test "delete" do
     user = create(:user)
-
-    sign_in(user)
-
-    order = create(:order)
+    order = create(:order, customer: create(:customer))
 
     sign_in(user)
 
     visit path_for(:frontend, "/orders")
     wait_for_pending_requests
 
-    assert_text order.customer_name
+    assert_text order.customer.name
 
-    within "tr", text: order.customer_name do
+    within "tr", text: order.customer.name do
       click_on "Delete"
     end
 
@@ -65,27 +65,29 @@ class OrdersTest < ApplicationSystemTestCase
     end
 
     assert_equal 0, Order.count
-    assert_no_text order.customer_name
+    assert_no_text order.customer.name
   end
 
   test "update" do
     user = create(:user)
-
-    order = create(:order)
+    customer = create(:customer)
+    order = create(:order, customer: customer)
 
     sign_in(user)
 
     visit path_for(:frontend, "/orders")
     wait_for_pending_requests
 
-    assert_text order.customer_name
+    assert_text order.customer.name
 
-    within "tr", text: order.customer_name do
+    within "tr", text: order.customer.name do
       click_on "Edit"
     end
 
     within ".ant-drawer" do
-      fill_in "Customer name", with: "John Doe"
+      within ".ant-form-item", text: "Customer" do
+        fill_in_select with: "#{customer.name} (#{customer.email})"
+      end
       within ".ant-form-item", text: "Status" do
         fill_in_select with: "Delivered"
       end
@@ -104,7 +106,7 @@ class OrdersTest < ApplicationSystemTestCase
     assert_attributes order.reload,
                       address: "123 Main St",
                       currency: "USD",
-                      customer_name: "John Doe",
+                      customer_id: customer.id,
                       shipping_fee: 10,
                       status: "delivered",
                       subtotal: 100,

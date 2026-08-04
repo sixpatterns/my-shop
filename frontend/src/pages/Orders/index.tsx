@@ -31,9 +31,9 @@ const Orders = () => {
       title: "Purchased at",
     },
     {
-      key: "customerName",
-      render: (_, i) => i.customerName,
-      title: "Customer name",
+      key: "customer",
+      render: (_, i) => i.customer.name,
+      title: "Customer",
     },
     {
       key: "status",
@@ -127,7 +127,7 @@ const Orders = () => {
         }}
         loading={orders.isFetching}
         rowKey="id"
-        scroll={{ x: "fit-content" }}
+        scroll={{ x: "max-content" }}
         size="small"
       />
     </>

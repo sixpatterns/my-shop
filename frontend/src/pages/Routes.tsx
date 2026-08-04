@@ -5,6 +5,7 @@ import Layout from "./Layout";
 import AsyncComponent from "../components/AsyncComponent";
 import { useSessionStore } from "../stores/useSessionStore";
 
+const Customers = AsyncComponent(() => import("./Customers"));
 const Dashboard = AsyncComponent(() => import("./Dashboard"));
 const Login = AsyncComponent(() => import("./Login"));
 const Orders = AsyncComponent(() => import("./Orders"));
@@ -38,6 +39,7 @@ export const Routes = () => {
       <Route element={<PrivateRoute />}>
         <Route element={<Layout />}>
           <Route Component={Dashboard} path="/dashboard" />
+          <Route Component={Customers} path="/customers" />
           <Route Component={Orders} path="/orders" />
         </Route>
       </Route>

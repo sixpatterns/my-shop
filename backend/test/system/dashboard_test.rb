@@ -5,8 +5,10 @@ require "application_system_test_case"
 class DashboardTest < ApplicationSystemTestCase
   test "orders summary" do
     user = create(:user)
-    create(:order, status: "delivered", total: 100)
-    create(:order, status: "pending", total: 50)
+    customer = create(:customer)
+
+    create(:order, customer: customer, status: "delivered", total: 100)
+    create(:order, customer: customer, status: "pending", total: 50)
 
     sign_in(user)
 

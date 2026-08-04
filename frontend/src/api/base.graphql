@@ -10,7 +10,9 @@ query orders {
     address
     createdAt
     currency
-    customerName
+    customer {
+      name
+    }
     id
     shippingFee
     status
@@ -23,9 +25,8 @@ query orders {
 query order($id: ID!) {
   order(id: $id) {
     address
-    createdAt
     currency
-    customerName
+    customerId
     id
     shippingFee
     status
@@ -45,6 +46,37 @@ mutation orderUpdate($input: OrderUpdateInput!) {
 
 mutation orderDelete($input: OrderDeleteInput!) {
   orderDelete(input: $input)
+}
+
+query customers {
+  customers {
+    createdAt
+    email
+    id
+    name
+    phone
+  }
+}
+
+query customer($id: ID!) {
+  customer(id: $id) {
+    email
+    id
+    name
+    phone
+  }
+}
+
+mutation customerCreate($input: CustomerCreateInput!) {
+  customerCreate(input: $input)
+}
+
+mutation customerUpdate($input: CustomerUpdateInput!) {
+  customerUpdate(input: $input)
+}
+
+mutation customerDelete($input: CustomerDeleteInput!) {
+  customerDelete(input: $input)
 }
 
 query ordersSummary(
