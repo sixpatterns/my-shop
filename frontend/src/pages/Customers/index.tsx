@@ -5,7 +5,6 @@ import { useState } from "react";
 import { Edit } from "./Edit";
 
 import { useCustomerDelete, useCustomers } from "../../api";
-import { CustomersQuery } from "../../api/base";
 import { displayDateTime } from "../../helpers/dateTime";
 
 const Customers = () => {
@@ -15,7 +14,7 @@ const Customers = () => {
 
   const customerDelete = useCustomerDelete();
 
-  const columns: TableColumnsType<CustomersQuery["customers"][number]> = [
+  const columns: TableColumnsType<(typeof customers.data)[number]> = [
     {
       key: "name",
       render: (_, i) => i.name,

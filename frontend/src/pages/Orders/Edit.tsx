@@ -7,9 +7,11 @@ import {
   useOrderCreate,
   useOrderUpdate,
 } from "../../api";
-import { OrderAttributes } from "../../api/base";
+import { graphql } from "../../api/graphql";
 import { FormDrawer } from "../../components/FormDrawer";
 import { ORDER_STATUSES } from "../../helpers/mappings";
+
+type OrderAttributes = ReturnType<typeof graphql.scalar<"OrderAttributes">>;
 
 const initialValues: OrderAttributes = {
   status: "pending",
