@@ -10,7 +10,7 @@ class CreateOrders < ActiveRecord::Migration[7.2]
       t.integer :status, null: false, index: true
       t.string :address, null: false
       t.string :currency, null: false
-      t.string :customer_name, null: false
+      t.references :customer, null: false, foreign_key: true, type: :uuid
 
       t.timestamps
     end

@@ -3,12 +3,21 @@ import { notification } from "antd";
 import { GraphQLClient } from "graphql-request";
 
 import {
+  CustomerCreateDocument,
+  CustomerCreateMutationVariables,
+  CustomerDeleteDocument,
+  CustomerDeleteMutationVariables,
+  CustomerDocument,
+  CustomersDocument,
+  CustomerUpdateDocument,
+  CustomerUpdateMutationVariables,
   OrderCreateDocument,
   OrderCreateMutationVariables,
   OrderDeleteDocument,
   OrderDeleteMutationVariables,
   OrderDocument,
   OrdersDocument,
+  OrdersQueryVariables,
   OrdersSummaryDocument,
   OrdersSummaryQueryVariables,
   OrderUpdateDocument,
@@ -61,6 +70,59 @@ export const useSessionCreate = () => {
   });
 };
 
+export const useCustomers = () => {
+  return useQuery({
+    initialData: [],
+    queryFn: async () => (await client.request(CustomersDocument)).customers,
+    queryKey: ["customers"],
+  });
+};
+
+export const useCustomer = (id: string) => {
+  return useQuery({
+    enabled: id !== "",
+    queryFn: async () =>
+      (await client.request(CustomerDocument, { id })).customer,
+    queryKey: ["customer", id],
+  });
+};
+
+export const useCustomerCreate = () => {
+  const queryClient = useQueryClient();
+
+  return useMutation({
+    mutationFn: (i: CustomerCreateMutationVariables) =>
+      client.request(CustomerCreateDocument, i),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["customers"] });
+    },
+  });
+};
+
+export const useCustomerDelete = () => {
+  const queryClient = useQueryClient();
+
+  return useMutation({
+    mutationFn: (i: CustomerDeleteMutationVariables) =>
+      client.request(CustomerDeleteDocument, i),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["customers"] });
+    },
+  });
+};
+
+export const useCustomerUpdate = () => {
+  const queryClient = useQueryClient();
+
+  return useMutation({
+    mutationFn: (i: CustomerUpdateMutationVariables) =>
+      client.request(CustomerUpdateDocument, i),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["customers"] });
+    },
+  });
+};
+
 export const useOrdersSummary = (i: OrdersSummaryQueryVariables) => {
   return useQuery({
     queryFn: async () =>
@@ -69,11 +131,11 @@ export const useOrdersSummary = (i: OrdersSummaryQueryVariables) => {
   });
 };
 
-export const useOrders = () => {
+export const useOrders = (i: OrdersQueryVariables) => {
   return useQuery({
     initialData: [],
-    queryFn: async () => (await client.request(OrdersDocument)).orders,
-    queryKey: ["orders"],
+    queryFn: async () => (await client.request(OrdersDocument, i)).orders,
+    queryKey: ["orders", i],
   });
 };
 

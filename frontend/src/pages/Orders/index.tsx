@@ -20,7 +20,7 @@ import { ORDER_STATUSES } from "../../helpers/mappings";
 const Orders = () => {
   const [modal, setModal] = useState({ id: "", open: false });
 
-  const orders = useOrders();
+  const orders = useOrders({ includeCustomer: true });
 
   const orderDelete = useOrderDelete();
 
@@ -31,9 +31,9 @@ const Orders = () => {
       title: "Purchased at",
     },
     {
-      key: "customerName",
-      render: (_, i) => i.customerName,
-      title: "Customer name",
+      key: "customer",
+      render: (_, i) => i.customer?.name,
+      title: "Customer",
     },
     {
       key: "status",
@@ -127,7 +127,7 @@ const Orders = () => {
         }}
         loading={orders.isFetching}
         rowKey="id"
-        scroll={{ x: "fit-content" }}
+        scroll={{ x: "max-content" }}
         size="small"
       />
     </>

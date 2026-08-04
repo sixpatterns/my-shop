@@ -3,6 +3,7 @@ import {
   LineChartOutlined,
   MenuOutlined,
   ShoppingCartOutlined,
+  TeamOutlined,
 } from "@ant-design/icons";
 import { Avatar, Button, Drawer } from "antd";
 import { useMemo, useState } from "react";
@@ -16,6 +17,11 @@ const navigation = [
     icon: <LineChartOutlined className="text-base" />,
     label: "Dashboard",
     to: "/dashboard",
+  },
+  {
+    icon: <TeamOutlined className="text-base" />,
+    label: "Customers",
+    to: "/customers",
   },
   {
     icon: <ShoppingCartOutlined className="text-base" />,

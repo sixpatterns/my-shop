@@ -5,12 +5,45 @@ mutation sessionCreate($input: SessionCreateInput!) {
   }
 }
 
-query orders {
+query customers {
+  customers {
+    createdAt
+    email
+    id
+    name
+    phone
+  }
+}
+
+query customer($id: ID!) {
+  customer(id: $id) {
+    email
+    id
+    name
+    phone
+  }
+}
+
+mutation customerCreate($input: CustomerCreateInput!) {
+  customerCreate(input: $input)
+}
+
+mutation customerUpdate($input: CustomerUpdateInput!) {
+  customerUpdate(input: $input)
+}
+
+mutation customerDelete($input: CustomerDeleteInput!) {
+  customerDelete(input: $input)
+}
+
+query orders($includeCustomer: Boolean!) {
   orders {
     address
     createdAt
     currency
-    customerName
+    customer @include(if: $includeCustomer) {
+      name
+    }
     id
     shippingFee
     status
@@ -23,9 +56,8 @@ query orders {
 query order($id: ID!) {
   order(id: $id) {
     address
-    createdAt
     currency
-    customerName
+    customerId
     id
     shippingFee
     status

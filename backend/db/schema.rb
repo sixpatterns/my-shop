@@ -14,6 +14,14 @@ ActiveRecord::Schema[7.2].define(version: 2026_03_21_160615) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
+  create_table "customers", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.string "name", null: false
+    t.string "email", null: false
+    t.string "phone"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "orders", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.decimal "shipping_fee", null: false
     t.decimal "subtotal", null: false
@@ -22,9 +30,10 @@ ActiveRecord::Schema[7.2].define(version: 2026_03_21_160615) do
     t.integer "status", null: false
     t.string "address", null: false
     t.string "currency", null: false
-    t.string "customer_name", null: false
+    t.uuid "customer_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["customer_id"], name: "index_orders_on_customer_id"
     t.index ["status"], name: "index_orders_on_status"
   end
 
@@ -36,4 +45,6 @@ ActiveRecord::Schema[7.2].define(version: 2026_03_21_160615) do
     t.datetime "updated_at", null: false
     t.index ["email"], name: "index_users_on_email", unique: true
   end
+
+  add_foreign_key "orders", "customers"
 end

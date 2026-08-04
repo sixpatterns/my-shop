@@ -1,7 +1,12 @@
 import { Button, Form, Input, InputNumber, Select } from "antd";
 import TextArea from "antd/es/input/TextArea";
 
-import { useOrder, useOrderCreate, useOrderUpdate } from "../../api";
+import {
+  useCustomers,
+  useOrder,
+  useOrderCreate,
+  useOrderUpdate,
+} from "../../api";
 import { OrderAttributes } from "../../api/base";
 import { FormDrawer } from "../../components/FormDrawer";
 import { ORDER_STATUSES } from "../../helpers/mappings";
@@ -19,6 +24,7 @@ export const Edit = ({
 }) => {
   const isNew = modal.id === "";
 
+  const customers = useCustomers();
   const order = useOrder(modal.id);
 
   const orderCreate = useOrderCreate();
@@ -61,11 +67,19 @@ export const Edit = ({
       >
         <div className="columns-2">
           <Form.Item
-            label="Customer name"
-            name="customerName"
+            label="Customer"
+            name="customerId"
             rules={[{ message: "Required", required: true }]}
           >
-            <Input placeholder="Customer name" />
+            <Select
+              optionFilterProp="label"
+              options={customers.data.map((i) => ({
+                label: `${i.name} (${i.email})`,
+                value: i.id,
+              }))}
+              placeholder="Customer"
+              showSearch
+            />
           </Form.Item>
 
           <Form.Item
