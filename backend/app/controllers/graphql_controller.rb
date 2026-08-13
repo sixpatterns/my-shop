@@ -17,10 +17,10 @@ class GraphqlController < ApplicationController
   private
 
   def load_session
-    header = request.headers["Authorization"].try(:gsub, "Bearer ", "")
+    signed_id = request.headers["Authorization"].try(:gsub, "Bearer ", "")
 
-    @session = header.present? ? Session.find_signed!(header) : Session.new(nil)
-  rescue JWT::DecodeError
+    @session = signed_id.present? ? Session.find_signed!(signed_id) : Session.new(nil)
+  rescue ActiveSupport::MessageVerifier::InvalidSignature, ActiveRecord::RecordNotFound
     render json: { errors: [{ message: "Session not found" }] }
   end
 
