@@ -150,8 +150,6 @@ GEM
     json-schema (6.2.0)
       addressable (~> 2.8)
       bigdecimal (>= 3.1, < 5)
-    jwt (3.1.2)
-      base64
     language_server-protocol (3.17.0.5)
     lint_roller (1.1.0)
     logger (1.7.0)
@@ -349,7 +347,6 @@ DEPENDENCIES
   faker
   graphql
   groupdate
-  jwt
   pg (~> 1.1)
   phantom!
   puma (>= 5.0)
