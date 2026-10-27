@@ -1,5 +1,5 @@
 import ProgressBar from "@badrap/bar-of-progress";
-import { Suspense, lazy, useEffect, FC } from "react";
+import { FC, lazy, Suspense, useEffect } from "react";
 
 const LoadingBar = () => {
   useEffect(() => {

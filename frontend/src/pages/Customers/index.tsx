@@ -2,10 +2,9 @@ import { PlusOutlined } from "@ant-design/icons";
 import { Button, Popconfirm, Space, Table, TableColumnsType } from "antd";
 import { useState } from "react";
 
-import { Edit } from "./Edit";
-
 import { useCustomerDelete, useCustomers } from "../../api";
 import { displayDateTime } from "../../helpers/dateTime";
+import { Edit } from "./Edit";
 
 const Customers = () => {
   const [modal, setModal] = useState({ id: "", open: false });
