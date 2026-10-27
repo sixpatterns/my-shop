@@ -1,9 +1,8 @@
 import { Navigate, Outlet, Route, Routes as Router } from "react-router";
 
-import Layout from "./Layout";
-
 import AsyncComponent from "../components/AsyncComponent";
 import { useSessionStore } from "../stores/useSessionStore";
+import Layout from "./Layout";
 
 const Customers = AsyncComponent(() => import("./Customers"));
 const Dashboard = AsyncComponent(() => import("./Dashboard"));

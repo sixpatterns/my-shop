@@ -10,11 +10,10 @@ import {
 } from "antd";
 import { useState } from "react";
 
-import { Edit } from "./Edit";
-
 import { useOrderDelete, useOrders } from "../../api";
 import { displayDateTime } from "../../helpers/dateTime";
 import { ORDER_STATUSES } from "../../helpers/mappings";
+import { Edit } from "./Edit";
 
 const Orders = () => {
   const [modal, setModal] = useState({ id: "", open: false });

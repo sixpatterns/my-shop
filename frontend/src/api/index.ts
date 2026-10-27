@@ -2,10 +2,9 @@ import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { notification } from "antd";
 import { GraphQLClient } from "graphql-request";
 
-import { graphql, VariablesOf } from "./graphql";
-
 import { queryClient } from "../App";
 import { useSessionStore } from "../stores/useSessionStore";
+import { graphql, VariablesOf } from "./graphql";
 
 const logout = () => {
   useSessionStore.getState().destroy();
