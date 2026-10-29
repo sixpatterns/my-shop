@@ -6,6 +6,8 @@ import { defineConfig } from "vite";
 export default defineConfig(({ mode }) => ({
   // System tests run Rails on a random port, so call the API on the same host.
   define:
-    mode === "test" ? { "import.meta.env.VITE_BACKEND_BASE_URL": '""' } : {},
+    mode === "test"
+      ? { "import.meta.env.VITE_BACKEND_BASE_URL": "window.location.origin" }
+      : {},
   plugins: [react(), rails({ input: "main.tsx", sourceDir: "frontend" })],
 }));
