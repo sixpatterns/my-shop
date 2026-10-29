@@ -27,10 +27,7 @@ cp .env.example .env
 
 ```sh
 # Run rails server
-mise run backend rails server
-
-# Run console
-mise run backend rails console
+rails server
 
 # Run react server
 mise run frontend yarn dev
@@ -49,7 +46,7 @@ mise run lint-fix
 #### 5. Running tests
 
 ```sh
-mise run backend rails test
-mise run backend rails test:system
-mise run backend rails test test/system/login_test.rb
+rails test
+rails test:system
+rails test test/system/login_test.rb
 ```

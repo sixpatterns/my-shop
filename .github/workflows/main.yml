@@ -26,7 +26,6 @@ jobs:
         with:
           bundler-cache: true
           ruby-version: 3.4.5
-          working-directory: ./backend
       - uses: actions/setup-node@v7
         with:
           cache: yarn
@@ -40,8 +39,7 @@ jobs:
       # Codegen
       - name: Generate schema.graphql
         run: |
-          bundle exec rails runner 'require "graphql/rake_task"; GraphQL::RakeTask.new(schema_name: "BackendSchema", idl_outfile: "../schema.graphql"); Rake::Task["graphql:schema:idl"].invoke'
-        working-directory: ./backend
+          bundle exec rails runner 'require "graphql/rake_task"; GraphQL::RakeTask.new(schema_name: "BackendSchema", idl_outfile: "schema.graphql"); Rake::Task["graphql:schema:idl"].invoke'
       - name: Validate schema.graphql
         run: git diff --exit-code schema.graphql
       - run: yarn codegen
@@ -49,7 +47,6 @@ jobs:
 
       # Lint
       - run: bundle exec rubocop
-        working-directory: ./backend
       - run: yarn lint
         working-directory: ./frontend
       - run: yarn prettier . --check
@@ -60,10 +57,7 @@ jobs:
 
       # Tests
       - run: bundle exec rails db:create
-        working-directory: ./backend
         env:
           RAILS_ENV: test
       - run: bundle exec rails test
-        working-directory: ./backend
       - run: bundle exec rails test:system
-        working-directory: ./backend
