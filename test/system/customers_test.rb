@@ -8,7 +8,7 @@ class CustomersTest < ApplicationSystemTestCase
 
     sign_in(user)
 
-    visit path_for(:frontend, "/customers")
+    visit admin_url("/customers")
     wait_for_pending_requests
 
     click_on "Add customer"
@@ -35,7 +35,7 @@ class CustomersTest < ApplicationSystemTestCase
 
     sign_in(user)
 
-    visit path_for(:frontend, "/customers")
+    visit admin_url("/customers")
     wait_for_pending_requests
 
     assert_text customer.name
@@ -59,7 +59,7 @@ class CustomersTest < ApplicationSystemTestCase
 
     sign_in(user)
 
-    visit path_for(:frontend, "/customers")
+    visit admin_url("/customers")
     wait_for_pending_requests
 
     assert_text customer.name

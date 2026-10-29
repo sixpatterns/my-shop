@@ -3,6 +3,7 @@ name: build
 on: [push]
 
 env:
+  ADMIN_HOST: admin.localhost
   DATABASE_URL: postgres://postgres@localhost/backend_test
   FERRUM_NODE_MOVING_WAIT: 0.1
   PARALLEL_WORKERS: 1
@@ -29,12 +30,9 @@ jobs:
       - uses: actions/setup-node@v7
         with:
           cache: yarn
-          cache-dependency-path: |
-            ./frontend/yarn.lock
           node-version: 24.14.0
 
       - run: yarn install --frozen-lockfile
-        working-directory: ./frontend
 
       # Codegen
       - name: Generate schema.graphql
@@ -43,17 +41,13 @@ jobs:
       - name: Validate schema.graphql
         run: git diff --exit-code schema.graphql
       - run: yarn codegen
-        working-directory: ./frontend
 
       # Lint
       - run: bundle exec rubocop
       - run: yarn lint
-        working-directory: ./frontend
-      - run: yarn prettier . --check
-        working-directory: ./frontend
+      - run: yarn format --check
 
       - run: yarn build
-        working-directory: ./frontend
 
       # Tests
       - run: bundle exec rails db:create

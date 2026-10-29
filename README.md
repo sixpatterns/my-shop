@@ -14,7 +14,8 @@ mise install
 npm install -g yarn
 
 # Install dependencies
-mise run install
+bundle install
+yarn install
 ```
 
 #### 2. Setup environment variables
@@ -26,11 +27,11 @@ cp .env.example .env
 #### 3. Running app
 
 ```sh
-# Run rails server
+# Run rails server, then open http://admin.localhost:3000
 rails server
 
 # Run react server
-mise run frontend yarn dev
+yarn dev
 ```
 
 #### 4. Useful shortcuts

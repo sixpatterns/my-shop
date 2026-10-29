@@ -10,15 +10,7 @@ class ApplicationSystemTestCase < ActionDispatch::SystemTestCase
   include SessionsHelper
   include WaitForPendingRequests
 
-  setup do
-    Capybara.current_session
-    Phantom::Test.wait_for(:frontend)
-  end
-
-  def path_for(tag, path)
-    case tag
-    when :frontend
-      "#{Phantom::Test.processes[:frontend][:url]}#{path}"
-    end
+  def admin_url(path)
+    "http://#{ENV.fetch('ADMIN_HOST')}#{path}"
   end
 end

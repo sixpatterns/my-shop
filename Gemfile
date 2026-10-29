@@ -53,3 +53,4 @@ end
 gem "graphql"
 gem "groupdate"
 gem "phantom", git: "https://github.com/vivekmiyani/phantom.git"
+gem "rails_vite"
