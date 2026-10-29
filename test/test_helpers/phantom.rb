@@ -6,7 +6,7 @@ Capybara.register_server :phantom do |app, port, host|
   Phantom::Test.start(
     :frontend,
     "yarn dev --port #{port + 1}",
-    dir: "../frontend",
+    dir: "frontend",
     env: {
       "VITE_BACKEND_BASE_URL" => "http://#{host}:#{port}"
     },
