@@ -13,7 +13,7 @@ const logout = () => {
 };
 
 const client = new GraphQLClient(
-  `${import.meta.env.VITE_BACKEND_BASE_URL}/graphql`,
+  `${import.meta.env.VITE_API_BASE_URL}/graphql`,
   {
     headers: () => ({
       Authorization: useSessionStore.getState().session?.token
