@@ -6,7 +6,7 @@ class LoginTest < ApplicationSystemTestCase
   test "valid credentials" do
     user = create(:user)
 
-    visit path_for(:frontend, "/")
+    visit admin_url("/")
     wait_for_pending_requests
 
     assert_selector "h1", text: "Sign in"
@@ -23,7 +23,7 @@ class LoginTest < ApplicationSystemTestCase
   test "invalid credentials" do
     user = create(:user)
 
-    visit path_for(:frontend, "/")
+    visit admin_url("/")
     wait_for_pending_requests
 
     assert_selector "h1", text: "Sign in"
@@ -38,7 +38,7 @@ class LoginTest < ApplicationSystemTestCase
   end
 
   test "invalid user" do
-    visit path_for(:frontend, "/")
+    visit admin_url("/")
     wait_for_pending_requests
 
     assert_selector "h1", text: "Sign in"
@@ -55,7 +55,7 @@ class LoginTest < ApplicationSystemTestCase
   test "expired token" do
     user = create(:user)
 
-    visit path_for(:frontend, "/")
+    visit admin_url("/")
     wait_for_pending_requests
 
     fill_in "Email", with: user.email
@@ -67,7 +67,7 @@ class LoginTest < ApplicationSystemTestCase
     assert_equal "/dashboard", page.current_path
 
     travel_to 1.day.from_now do
-      visit path_for(:frontend, "/")
+      visit admin_url("/")
       wait_for_pending_requests
 
       sleep 1

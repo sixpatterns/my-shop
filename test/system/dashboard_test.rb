@@ -12,7 +12,7 @@ class DashboardTest < ApplicationSystemTestCase
 
     sign_in(user)
 
-    visit path_for(:frontend, "/dashboard")
+    visit admin_url("/dashboard")
     wait_for_pending_requests
 
     assert_selector "h1", text: "Dashboard"

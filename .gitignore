@@ -34,3 +34,8 @@
 
 #
 !/.env.example
+/frontend/api/graphql-cache.d.ts
+/frontend/api/graphql-env.d.ts
+/node_modules
+/public/vite
+/public/vite-test

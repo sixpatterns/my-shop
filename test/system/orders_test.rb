@@ -9,7 +9,7 @@ class OrdersTest < ApplicationSystemTestCase
 
     sign_in(user)
 
-    visit path_for(:frontend, "/orders")
+    visit admin_url("/orders")
     wait_for_pending_requests
 
     click_on "Add order"
@@ -50,7 +50,7 @@ class OrdersTest < ApplicationSystemTestCase
 
     sign_in(user)
 
-    visit path_for(:frontend, "/orders")
+    visit admin_url("/orders")
     wait_for_pending_requests
 
     assert_text order.customer.name
@@ -75,7 +75,7 @@ class OrdersTest < ApplicationSystemTestCase
 
     sign_in(user)
 
-    visit path_for(:frontend, "/orders")
+    visit admin_url("/orders")
     wait_for_pending_requests
 
     assert_text order.customer.name

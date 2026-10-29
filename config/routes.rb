@@ -11,4 +11,8 @@ Rails.application.routes.draw do
   # root "posts#index"
 
   post "/graphql", to: "graphql#execute"
+
+  constraints host: ENV.fetch("ADMIN_HOST") do
+    get "(*path)", to: "admin#index"
+  end
 end
